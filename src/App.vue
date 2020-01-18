@@ -1,19 +1,36 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+<div class="hello">
+    <form action>
+      <input type="text" placeholder="text" v-model="text">
+      <input type="submit" value="decide" @click="submitClick">
+    </form>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Axios from "axios";
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
+  name: "HelloWorld",
+  data() {
+    return {
+      text: null
+    };
+  },
+  methods: {
+    submitClick() {
+      const body = {
+        text: this.text
+      };
+      Axios.get(`http://localhost:3000/hoge/${this.text}`)
+        .then(res => {
+          console.log(res.data.name)
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   }
-}
+};
 </script>
 
 <style>
